@@ -12,6 +12,9 @@ var path = require('path'),
     run = helper.runCommand.bind(null, COMMAND),
     runCover = helper.runCommand.bind(null, COVER_COMMAND);
 
+// TODO: REMOVE
+//helper.setVerbose(true);
+
 // TODO: Have the tests alternately read from *.yml file.
 // TODO: Add tests for per-file, per-patten configured coverage.
 // TODO: Maybe new test files `test-check-coverage-per-file`,
