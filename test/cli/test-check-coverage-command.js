@@ -79,7 +79,7 @@ module.exports = {
         "should fail with multiple reasons from configuration file": function (test) {
             test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
             // YML equivalent to: '--statements=72', '--functions=50', '--branches=72', '--lines=72'
-            run([ '--config', 'config.istanbul.yml' ], function (results) {
+            run([ '--config', 'config-check-global.istanbul.yml' ], function (results) {
                 test.ok(!results.succeeded());
                 test.ok(results.grepError(/Coverage for lines/));
                 test.ok(results.grepError(/Coverage for statements/));
@@ -91,7 +91,7 @@ module.exports = {
         "should fail with multiple reasons from configuration file and command line": function (test) {
             test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
             // YML equivalent to: '--statements=72', '--functions=50', '--branches=72', '--lines=72'
-            run([ '--statements=10', '--config', 'config.istanbul.yml' ], function (results) {
+            run([ '--statements=10', '--config', 'config-check-global.istanbul.yml' ], function (results) {
                 test.ok(!results.succeeded());
                 test.ok(results.grepError(/Coverage for lines/));
                 test.ok(!results.grepError(/Coverage for statements/));
