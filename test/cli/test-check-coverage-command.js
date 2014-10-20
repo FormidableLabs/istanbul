@@ -14,11 +14,6 @@ var path = require('path'),
 
 // TODO: REMOVE
 //helper.setVerbose(true);
-
-// TODO: Have the tests alternately read from *.yml file.
-// TODO: Add tests for per-file, per-patten configured coverage.
-// TODO: Maybe new test files `test-check-coverage-per-file`,
-//       `test-check-coverage-patterns`
 module.exports = {
     setUp: function (cb) {
         rimraf.sync(OUTPUT_DIR);
@@ -138,6 +133,9 @@ module.exports = {
                 test.ok(results.grepError(/Coverage for statements/));
                 test.ok(!results.grepError(/Coverage for branches/));
                 test.ok(!results.grepError(/Coverage for functions/));
+                test.ok(results.grepError(/dummy_vendor_lib\.js/));
+                test.ok(!results.grepError(/foo\.js/));
+                test.ok(!results.grepError(/foo\.js/));
                 test.done();
             });
         }
