@@ -4,9 +4,5 @@ check:
     functions: 50
     branches: 72
     lines: 72
-    # TODO: Exclude failing file below threshold.
-    # excludes:
-    #     - lib/foo.js
-    #     - vendor/dummy_vendor_lib.js
-    #     - lib/util/generate-names.js
-    #     - lib/bar.js
+    excludes:
+        - lib/bar.js # 40, 0, 40, 0

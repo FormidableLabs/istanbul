@@ -13,7 +13,7 @@ var path = require('path'),
     runCover = helper.runCommand.bind(null, COVER_COMMAND);
 
 // TODO: REMOVE
-// helper.setVerbose(true);
+//helper.setVerbose(true);
 
 // TODO: Have the tests alternately read from *.yml file.
 // TODO: Add tests for per-file, per-patten configured coverage.
@@ -131,12 +131,13 @@ module.exports = {
         "should fail on inadequate statement coverage": function (test) {
             test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
             run([ '--config', 'config-check-each.istanbul.yml' ], function (results) {
-                // TODO HERE -- REMOVE!
-                test.ok(results.succeeded());
-
-                // TODO HERE -- ENABLE!
-                // test.ok(!results.succeeded());
-                // test.ok(results.grepError(/Coverage for statements/));
+                // vendor/dummy_vendor_lib.js (statements 66.67% vs. 72%)
+                // vendor/dummy_vendor_lib.js (lines 66.67% vs. 72%)
+                test.ok(!results.succeeded());
+                test.ok(results.grepError(/Coverage for lines/));
+                test.ok(results.grepError(/Coverage for statements/));
+                test.ok(!results.grepError(/Coverage for branches/));
+                test.ok(!results.grepError(/Coverage for functions/));
                 test.done();
             });
         }
