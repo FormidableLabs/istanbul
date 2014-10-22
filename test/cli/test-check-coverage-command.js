@@ -138,13 +138,28 @@ module.exports = {
                 test.done();
             });
         },
-        "should fail on inadequate mixed global/each coverage": function (test) {
+        "should fail on inadequate mixed global args / each coverage": function (test) {
             test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
             run([ '--branches=100', '--functions=100', '--config', 'config-check-each.istanbul.yml' ], function (results) {
                 test.ok(!results.succeeded());
                 test.ok(!results.grepError(/Coverage for lines .* global/));
                 test.ok(!results.grepError(/Coverage for statements .* global/));
                 test.ok(results.grepError(/Coverage for branches .* global/));
+                test.ok(results.grepError(/Coverage for functions .* global/));
+                test.ok(results.grepError(/Coverage for lines .* per-file/));
+                test.ok(results.grepError(/Coverage for statements .* per-file/));
+                test.ok(!results.grepError(/Coverage for branches .* per-file/));
+                test.ok(!results.grepError(/Coverage for functions .* per-file/));
+                test.done();
+            });
+        },
+        "should fail on inadequate mixed global / each configured coverage": function (test) {
+            test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
+            run([ '--config', 'config-check-mixed.istanbul.yml' ], function (results) {
+                test.ok(!results.succeeded());
+                test.ok(!results.grepError(/Coverage for lines .* global/));
+                test.ok(results.grepError(/Coverage for statements .* global/));
+                test.ok(!results.grepError(/Coverage for branches .* global/));
                 test.ok(results.grepError(/Coverage for functions .* global/));
                 test.ok(results.grepError(/Coverage for lines .* per-file/));
                 test.ok(results.grepError(/Coverage for statements .* per-file/));
