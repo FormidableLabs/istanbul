@@ -12,8 +12,6 @@ var path = require('path'),
     run = helper.runCommand.bind(null, COMMAND),
     runCover = helper.runCommand.bind(null, COVER_COMMAND);
 
-// TODO: REMOVE
-//helper.setVerbose(true);
 module.exports = {
     setUp: function (cb) {
         rimraf.sync(OUTPUT_DIR);
