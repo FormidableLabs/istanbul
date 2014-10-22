@@ -30,7 +30,7 @@ module.exports = {
             test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
             run([ '--statements', '72' ], function (results) {
                 test.ok(!results.succeeded());
-                test.ok(results.grepError(/Coverage for statements/));
+                test.ok(results.grepError(/Coverage for statements .* global/));
                 test.done();
             });
         },
@@ -38,7 +38,7 @@ module.exports = {
             test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
             run([ '--branches', '72' ], function (results) {
                 test.ok(!results.succeeded());
-                test.ok(results.grepError(/Coverage for branches/));
+                test.ok(results.grepError(/Coverage for branches .* global/));
                 test.done();
             });
         },
@@ -46,7 +46,7 @@ module.exports = {
             test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
             run([ '--functions', '72' ], function (results) {
                 test.ok(!results.succeeded());
-                test.ok(results.grepError(/Coverage for functions/));
+                test.ok(results.grepError(/Coverage for functions .* global/));
                 test.done();
             });
         },
@@ -54,7 +54,7 @@ module.exports = {
             test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
             run([ '--lines', '72' ], function (results) {
                 test.ok(!results.succeeded());
-                test.ok(results.grepError(/Coverage for lines/));
+                test.ok(results.grepError(/Coverage for lines .* global/));
                 test.done();
             });
         },
@@ -62,10 +62,10 @@ module.exports = {
             test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
             run([ '--statements=72', '--functions=50', '--branches=72', '--lines=72' ], function (results) {
                 test.ok(!results.succeeded());
-                test.ok(results.grepError(/Coverage for lines/));
-                test.ok(results.grepError(/Coverage for statements/));
-                test.ok(results.grepError(/Coverage for branches/));
-                test.ok(!results.grepError(/Coverage for functions/));
+                test.ok(results.grepError(/Coverage for lines .* global/));
+                test.ok(results.grepError(/Coverage for statements .* global/));
+                test.ok(results.grepError(/Coverage for branches .* global/));
+                test.ok(!results.grepError(/Coverage for functions .* global/));
                 test.done();
             });
         },
@@ -74,10 +74,10 @@ module.exports = {
             // YML equivalent to: '--statements=72', '--functions=50', '--branches=72', '--lines=72'
             run([ '--config', 'config-check-global.istanbul.yml' ], function (results) {
                 test.ok(!results.succeeded());
-                test.ok(results.grepError(/Coverage for lines/));
-                test.ok(results.grepError(/Coverage for statements/));
-                test.ok(results.grepError(/Coverage for branches/));
-                test.ok(!results.grepError(/Coverage for functions/));
+                test.ok(results.grepError(/Coverage for lines .* global/));
+                test.ok(results.grepError(/Coverage for statements .* global/));
+                test.ok(results.grepError(/Coverage for branches .* global/));
+                test.ok(!results.grepError(/Coverage for functions .* global/));
                 test.done();
             });
         },
@@ -86,10 +86,10 @@ module.exports = {
             // YML equivalent to: '--statements=72', '--functions=50', '--branches=72', '--lines=72'
             run([ '--statements=10', '--config', 'config-check-global.istanbul.yml' ], function (results) {
                 test.ok(!results.succeeded());
-                test.ok(results.grepError(/Coverage for lines/));
-                test.ok(!results.grepError(/Coverage for statements/));
-                test.ok(results.grepError(/Coverage for branches/));
-                test.ok(!results.grepError(/Coverage for functions/));
+                test.ok(results.grepError(/Coverage for lines .* global/));
+                test.ok(!results.grepError(/Coverage for statements .* global/));
+                test.ok(results.grepError(/Coverage for branches .* global/));
+                test.ok(!results.grepError(/Coverage for functions .* global/));
                 test.done();
             });
         },
@@ -97,10 +97,10 @@ module.exports = {
             test.ok(existsSync(path.resolve(OUTPUT_DIR, 'coverage.json')));
             run([ '--statements=-3', '--functions=-10', '--branches=-1', '--lines=-3' ], function (results) {
                 test.ok(!results.succeeded());
-                test.ok(results.grepError(/Uncovered count for lines/));
-                test.ok(results.grepError(/Uncovered count for statements/));
-                test.ok(results.grepError(/Uncovered count for branches/));
-                test.ok(!results.grepError(/Uncovered count for functions/));
+                test.ok(results.grepError(/Uncovered count for lines .* global/));
+                test.ok(results.grepError(/Uncovered count for statements .* global/));
+                test.ok(results.grepError(/Uncovered count for branches .* global/));
+                test.ok(!results.grepError(/Uncovered count for functions .* global/));
                 test.done();
             });
         },
@@ -127,10 +127,11 @@ module.exports = {
                 // vendor/dummy_vendor_lib.js (statements 66.67% vs. 72%)
                 // vendor/dummy_vendor_lib.js (lines 66.67% vs. 72%)
                 test.ok(!results.succeeded());
-                test.ok(results.grepError(/Coverage for lines/));
-                test.ok(results.grepError(/Coverage for statements/));
-                test.ok(!results.grepError(/Coverage for branches/));
-                test.ok(!results.grepError(/Coverage for functions/));
+                test.ok(!results.grepError(/Coverage for lines .* global/));
+                test.ok(results.grepError(/Coverage for lines .* per-file/));
+                test.ok(results.grepError(/Coverage for statements .* per-file/));
+                test.ok(!results.grepError(/Coverage for branches .* per-file/));
+                test.ok(!results.grepError(/Coverage for functions .* per-file/));
                 test.ok(results.grepError(/dummy_vendor_lib\.js/));
                 test.ok(!results.grepError(/foo\.js/));
                 test.ok(!results.grepError(/foo\.js/));
