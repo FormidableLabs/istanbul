@@ -168,6 +168,5 @@ module.exports = {
                 test.done();
             });
         }
-        // TODO: Add all comparable tests from above.
     }
 };
